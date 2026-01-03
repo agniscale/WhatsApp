@@ -740,68 +740,59 @@ document.querySelectorAll('.service-card').forEach(card => {
 </html>
 
 <!-- WhatsApp Button -->
-<a href="https://wa.me/918839523331" target="_blank" id="waBtn" class="Btn hideBtn">
+<button id="waBtn" class="Btn hideBtn" onclick="openWhatsApp()">
   <span class="svgContainer">
-    <svg viewBox="0 0 16 16" height="2.5em" fill="white">
-      <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326z"/>
+    <svg xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 32 32"
+         width="22"
+         height="22"
+         fill="white">
+      <path d="M19.11 17.53c-.29-.14-1.7-.84-1.96-.94-.26-.1-.45-.14-.64.14-.19.29-.74.94-.91 1.13-.17.19-.34.22-.63.07-.29-.14-1.23-.45-2.35-1.44-.87-.77-1.45-1.72-1.62-2.01-.17-.29-.02-.44.13-.58.13-.13.29-.34.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.55-.88-2.13-.23-.56-.47-.48-.64-.49-.17-.01-.36-.01-.55-.01-.19 0-.5.07-.76.36-.26.29-1 1-1 2.39 0 1.39 1.01 2.73 1.15 2.92.14.19 1.99 3.04 4.83 4.27.68.29 1.21.46 1.62.59.68.22 1.29.19 1.78.12.55-.08 1.7-.7 1.94-1.35.24-.65.24-1.21.17-1.35-.07-.14-.26-.22-.55-.36z"/>
+      <path d="M16.02 3C8.83 3 3 8.83 3 16.02c0 2.54.66 5.02 1.92 7.19L3 29l5.95-1.86c2.06 1.13 4.39 1.73 6.78 1.73 7.19 0 13.02-5.83 13.02-13.02C28.75 8.83 22.92 3 16.02 3zm0 23.73c-2.15 0-4.25-.57-6.07-1.66l-.43-.26-3.53 1.11 1.15-3.43-.28-.45a10.69 10.69 0 0 1-1.63-5.67c0-5.9 4.8-10.7 10.7-10.7 2.86 0 5.55 1.11 7.57 3.13a10.63 10.63 0 0 1 3.13 7.57c0 5.9-4.8 10.7-10.7 10.7z"/>
     </svg>
   </span>
   <span class="BG"></span>
-</a>
+</button>
 
 <style>
 .Btn {
   width: 45px;
   height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background-color: transparent;
   position: fixed;
   bottom: 20px;
   right: 20px;
-  border-radius: 7px;
+  background: transparent;
+  border: none;
   cursor: pointer;
-  transition: all 0.3s;
   z-index: 9999;
 }
-
 .svgContainer {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(4px);
   border-radius: 10px;
-  transition: all 0.3s;
-  border: 1px solid rgba(156, 156, 156, 0.466);
+  border: 1px solid rgba(156,156,156,0.4);
+  backdrop-filter: blur(4px);
 }
-
 .BG {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: #00d757;
-  z-index: -1;
   border-radius: 9px;
-  transition: all 0.3s;
+  z-index: -1;
+  transition: 0.3s;
 }
-
 .Btn:hover .BG {
   transform: rotate(35deg);
   transform-origin: bottom;
 }
 
-.Btn:hover .svgContainer {
-  background-color: rgba(156, 156, 156, 0.466);
-}
-
-/* hidden initially */
+/* show after 3 sec */
 .hideBtn {
   opacity: 0;
-  transform: scale(0.5);
+  transform: scale(0.4);
   pointer-events: none;
 }
 .showBtn {
@@ -812,9 +803,20 @@ document.querySelectorAll('.service-card').forEach(card => {
 </style>
 
 <script>
-  setTimeout(() => {
-    document.getElementById("waBtn").classList.remove("hideBtn");
-    document.getElementById("waBtn").classList.add("showBtn");
-  }, 3000); // 3 seconds
+/* Delay show */
+setTimeout(() => {
+  document.getElementById("waBtn").classList.remove("hideBtn");
+  document.getElementById("waBtn").classList.add("showBtn");
+}, 3000);
+
+/* WhatsApp + FB Event */
+function openWhatsApp() {
+  if (typeof fbq === "function") {
+    fbq('track', 'Contact');       // 👈 FB standard event
+    fbq('trackCustom', 'WhatsApp_Click');
+  }
+  window.open("https://wa.me/918839523331", "_blank");
+}
 </script>
+
 
